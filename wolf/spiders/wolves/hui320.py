@@ -23,40 +23,40 @@ re_html_string = re.compile(r'</?\w+[^>]*>')
 html_parser = HTMLParser.HTMLParser()
 
 class Wolf(Base_Wolf):
-	def __init__(self, *args, **kwargs):
-		super(Wolf, self).__init__(*args, **kwargs)
-		
-		self.name = 'hui320'
-		self.seed_urls = [
-			'http://www.hui320.com/xin/hmovies',
-			'http://www.hui320.com/xin/banime',
-		]
-		self.base_url = 'http://www.hui320.com/'
-		self.anchor['follow'] = "//*[@class='excerpt']//h2/a/@href"
-		self.anchor['desc'] = "//*[@class='article-content']"
-	
-	def get_resource(self, item, response, tree):
-		item = super(Wolf, self).get_resource(item, response, tree)
-		
-		# extract
-		resource = list()
-		for l in StringIO.StringIO(etree.tostring(tree, encoding='unicode')):
-			new_l = re_html_string.sub('', l)
-			
-			try:
-				urls = [u for u in re_url.findall(l) if 'pan.baidu.com' in u][0]
-			except:
-				continue
-			
-			try:
-				codes = re_code.findall("".join(re_split.findall(new_l)))[0]
-			except:
-				codes = ''
-			
-			resource.append({'link':urls, 'code':codes, 'info':new_l})
-		
-		if len(resource):
-			return self.netdisk_check(item, resource)
-		else:
-			self.log("No Resource DropItem %s" % item['source'], level=log.WARNING)
-			return None
+    def __init__(self, *args, **kwargs):
+        super(Wolf, self).__init__(*args, **kwargs)
+
+        self.name = 'hui320'
+        self.seed_urls = [
+            'http://www.hui320.com/xin/hmovies',
+            'http://www.hui320.com/xin/banime',
+        ]
+        self.base_url = 'http://www.hui320.com/'
+        self.anchor['follow'] = "//*[@class='excerpt']//h2/a/@href"
+        self.anchor['desc'] = "//*[@class='article-content']"
+
+    def get_resource(self, item, response, tree):
+        item = super(Wolf, self).get_resource(item, response, tree)
+
+        # extract
+        resource = list()
+        for l in StringIO.StringIO(etree.tostring(tree, encoding='unicode')):
+            new_l = re_html_string.sub('', l)
+
+            try:
+                urls = [u for u in re_url.findall(l) if 'pan.baidu.com' in u][0]
+            except:
+                continue
+
+            try:
+                codes = re_code.findall("".join(re_split.findall(new_l)))[0]
+            except:
+                codes = ''
+
+            resource.append({'link':urls, 'code':codes, 'info':new_l})
+
+        if len(resource):
+            return self.netdisk_check(item, resource)
+        else:
+            self.log("No Resource DropItem %s" % item['source'], level=log.WARNING)
+            return None

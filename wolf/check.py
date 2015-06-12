@@ -42,13 +42,13 @@ class MultiCookieBrowser(object):
 mcb = MultiCookieBrowser(30)
 
 def check_torrent(content):
-	try:
-		metadata = libtorrent.bdecode(content)
-		info = libtorrent.torrent_info(metadata)
-		urn = str(info.info_hash()).lower()
-		return urn
-	except:
-		return None
+    try:
+        metadata = libtorrent.bdecode(content)
+        info = libtorrent.torrent_info(metadata)
+        urn = str(info.info_hash()).lower()
+        return urn
+    except:
+        return None
 
 # 检测百度云链接是否存在
 def check_baiduyun(url, br=None):
