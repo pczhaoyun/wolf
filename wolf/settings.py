@@ -29,7 +29,7 @@ EXTENSIONS = {
     'scrapy.contrib.spiderstate.SpiderState': None,
     'scrapy.contrib.throttle.AutoThrottle': None,
     'scrapy.contrib.feedexport.FeedExporter': None,
-    'wolf.feedexport.FeedExporter' : 500,
+    'wolf.feedexport.FeedExporter': 500,
 }
 
 LOG_FILE = 'log.log'
@@ -39,6 +39,11 @@ if platform.system() == 'Linux':
     DBDIR = '/opt/db/wolf'
 else:
     DBDIR = 'D:\\obtainfo\\Store\\db'
+
+# make sure directory exists
+if not os.path.exists(DBDIR):
+    os.makedirs(DBDIR)
+
 UrlFilter = bsddb.open(os.path.join(DBDIR, 'url.db'), autocommit=True)
 BtFilter = bsddb.open(os.path.join(DBDIR, 'bt.db'), autocommit=True)
 Ed2kFilter = bsddb.open(os.path.join(DBDIR, 'ed2k.db'), autocommit=True)
@@ -49,6 +54,10 @@ if platform.system() == 'Linux':
     TORRENT_DIR = '/opt/db/torrent'
 else:
     TORRENT_DIR = 'D:\\obtainfo\\Store\\torrent'
+
+# make sure directory exists
+if not os.path.exists(TORRENT_DIR):
+    os.makedirs(TORRENT_DIR)
 
 # mongodb store
 Collection = pymongo.Connection().scrapy.wolf
