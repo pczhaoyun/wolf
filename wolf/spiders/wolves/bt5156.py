@@ -7,6 +7,7 @@ from scrapy import log
 from scrapy.http import Request
 from base.base_wolf import Base_Wolf
 
+
 class Wolf(Base_Wolf):	
     def __init__(self, *args, **kwargs):
         super(Wolf, self).__init__(*args, **kwargs)
